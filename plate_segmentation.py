@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 def segmen(new_img):
-    roi_gray = cv2.cvtColor(new_image,cv2.COLOR_BGR2GRAY)
+    roi_gray = cv2.cvtColor(new_img,cv2.COLOR_BGR2GRAY)
     roi_blur = cv2.GaussianBlur(roi_gray,(3,3),1)
     ret,thre = cv2.threshold(roi_blur,120,255,cv2.THRESH_BINARY_INV)
     kerel3 = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
@@ -18,6 +18,6 @@ def segmen(new_img):
     areas = sorted(areas,reverse=True)[2:12]
     for i in areas:
         (x,y,w,h) = cv2.boundingRect(cont[areas_ind[i]])
-        cv2.rectangle(new_image,(x,y),(x+w,y+h),(0,255,0),2)
-    final_img = cv2.cvtColor(new_image,cv2.COLOR_BGR2RGB)
+        cv2.rectangle(new_img,(x,y),(x+w,y+h),(0,255,0),2)
+    final_img = cv2.cvtColor(new_img,cv2.COLOR_BGR2RGB)
     return final_img

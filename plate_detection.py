@@ -18,9 +18,6 @@ def pre_processing(img):
     canny_image = cv2.Canny(thresh_image,250,255)
     kernel = np.ones((3,3), np.uint8)
     dilated_image = cv2.dilate(canny_image,kernel,iterations=1)
-    return dilated_image
-
-def find_contour(dilated_image):
     contours, hierarchy = cv2.findContours(dilated_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_TC89_L1)
     contours= sorted(contours, key = cv2.contourArea, reverse = True)[:10]
     screenCnt = None
@@ -30,9 +27,10 @@ def find_contour(dilated_image):
         if len(approx) == 4:
             screenCnt = approx
             break
+    
     mask = np.zeros(im_gray.shape,np.uint8)
     final = cv2.drawContours(mask,[screenCnt],0,255,-1,)
-    final = cv2.bitwise_and(im,im,mask=mask)
+    final = cv2.bitwise_and(img,img,mask=mask)
     #plt.imshow(new_image)
     return final
 
